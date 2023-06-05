@@ -144,7 +144,7 @@
     "@types/jmespath": "0.15.0",
     "@types/node": "10.14.1",
     "@types/semver": "5.5.0",
-    "@types/vscode": "^1.35.0",
+    "@types/vscode": "^1.67.0",
     "typescript": "3.5.2"
   },
   "dependencies": {
