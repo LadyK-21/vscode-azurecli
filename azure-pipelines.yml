@@ -4,8 +4,6 @@ trigger:
   branches:
     include:
       - main
-  tags:
-    include: ["*"]
 pr: none
 
 resources:
@@ -16,9 +14,19 @@ resources:
       ref: main
       endpoint: Monaco
 
+parameters:
+  - name: publishExtension
+    displayName: 🚀 Publish Extension
+    type: boolean
+    default: false
+
 extends:
   template: azure-pipelines/extension/stable.yml@templates
   parameters:
+    publishExtension: ${{ parameters.publishExtension }}
+
+    l10nSourcePaths: ./src
+
     buildSteps:
       - script: npm install -ci
         displayName: Install dependencies
@@ -31,3 +39,9 @@ extends:
           docker-compose -f .devcontainer/docker-compose.test.yml build --no-cache --pull
           docker-compose -f .devcontainer/docker-compose.test.yml run vscode-azurecli-test
         displayName: Test extension
+
+    tsa:
+      config:
+        areaPath: 'Visual Studio Code Miscellaneous Extensions'
+        serviceTreeID: 'c8cb03c6-176e-40dd-90a5-518de08666dc'
+      enabled: true
